@@ -10,9 +10,13 @@ import SwiftUI
 
 @main
 struct ToDoListApp: App {
+    let vm = ListViewModel()
+    
     var body: some Scene {
         WindowGroup {
-            ListView()
+            NavigationStack {
+                ListView(viewModel: vm)
+            }
         }
     }
 }
