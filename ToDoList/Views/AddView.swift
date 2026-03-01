@@ -10,6 +10,7 @@ import SwiftUI
 struct AddView: View {
     
     @State var textFieldText: String = ""
+    @Environment(\.dismiss) var dismiss
     
     var body: some View {
         ScrollView {
