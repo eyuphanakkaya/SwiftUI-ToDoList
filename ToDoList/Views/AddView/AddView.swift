@@ -9,8 +9,12 @@ import SwiftUI
 
 struct AddView: View {
     
+    @ObservedObject var viewModel: AddViewModel
     @State var textFieldText: String = ""
     @Environment(\.dismiss) var dismiss
+    
+    @State var alertTitle: String = ""
+    @State var showAlert: Bool = false
     
     var body: some View {
         ScrollView {
@@ -22,7 +26,7 @@ struct AddView: View {
                     .cornerRadius(10)
                 
                 Button {
-                    
+                    save()
                 } label: {
                     Text("Save")
                         .foregroundStyle(.white)
@@ -37,11 +41,21 @@ struct AddView: View {
         }
         .padding(14)
         .navigationTitle("Add an Item 🖊️")
+        .onChange(of: viewModel.didSave) { _ ,newDidSave  in
+            if newDidSave { dismiss() }
+        }
+        
+        
+    }
+    
+    private func save() {
+        viewModel.save(title: textFieldText)
     }
 }
 
 #Preview {
     NavigationStack {
-        AddView()
+        let vm = AddViewModel()
+        AddView(viewModel: vm)
     }
 }

@@ -22,7 +22,7 @@ struct ListView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     NavigationLink("Add") {
-                        AddView()
+                        AddViewFactory.make()
                     }
                 }
                 
