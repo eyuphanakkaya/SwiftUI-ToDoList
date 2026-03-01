@@ -9,12 +9,19 @@ import SwiftUI
 import Combine
 
 final class ListViewModel: ObservableObject {
-    @Published var items: [ItemModel] = [
-        ItemModel(title: "This is the first title", isCompleted: false),
-        ItemModel(title: "This is the second title", isCompleted: true),
-        ItemModel(title: "This is the thirt title", isCompleted: true)
-    ]
+    @Published var items: [ItemModel] = []
     
+    init() {
+        getItems()
+    }
+    
+    private func getItems() {
+        let itme1 = ItemModel(title: "This is the first title", isCompleted: false)
+        let item2 = ItemModel(title: "This is the second title", isCompleted: true)
+        let item3 = ItemModel(title: "This is the thirt title", isCompleted: true)
+        
+        items.append(contentsOf: [itme1, item2, item3])
+    }
     
     func delete(index: IndexSet) {
         items.remove(atOffsets: index)
