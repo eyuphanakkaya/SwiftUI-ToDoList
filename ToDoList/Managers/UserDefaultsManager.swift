@@ -7,13 +7,6 @@
 
 import Foundation
 
-protocol Persisting {
-    associatedtype Item: Codable
-    
-    func save(items: Item)
-    func load() -> Item?
-    func delete()
-}
 
 final class UserDefaultsManager<T: Codable>: Persisting {
     typealias Item = T
