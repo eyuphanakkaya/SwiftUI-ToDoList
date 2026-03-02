@@ -9,7 +9,8 @@ import SwiftUI
 
 final class AddViewFactory {
     static func make() -> some View {
-        let viewModel = AddViewModel()
+        let userDefault = UserDefaultsManager()
+        let viewModel = AddViewModel(persistence: userDefault)
         let view = AddView(viewModel: viewModel)
 
         return view

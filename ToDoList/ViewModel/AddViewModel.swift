@@ -11,6 +11,12 @@ import Combine
 final class AddViewModel: ObservableObject {
     @Published var errorMessage: String? = nil
     @Published var didSave = false
+    
+    private let persistence: Persisting
+    
+    init(persistence: Persisting) {
+        self.persistence = persistence
+    }
 
     func save(title: String) {
         guard title.count >= 3 else {
@@ -18,5 +24,7 @@ final class AddViewModel: ObservableObject {
             return
         }
         didSave = true
+        
+        persistence.add(title: title)
     }
 }

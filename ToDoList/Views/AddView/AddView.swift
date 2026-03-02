@@ -55,7 +55,6 @@ struct AddView: View {
 
 #Preview {
     NavigationStack {
-        let vm = AddViewModel()
-        AddView(viewModel: vm)
+        AddViewFactory.make()
     }
 }
