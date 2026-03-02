@@ -20,16 +20,15 @@ final class ListViewModel: ObservableObject {
     
     init(persistence: Persisting) {
         self.persistence = persistence
-        getItems()
     }
     
-    private func getItems() {
+    private func save() {
+        persistence.save(items: items)
+    }
+    
+    func getItems() {
         guard let loadItems = persistence.load() else {return}
         items = loadItems
-    }
-    
-    func delete(index: IndexSet) {
-        items.remove(atOffsets: index)
     }
     
     func move(from: IndexSet, to: Int) {
@@ -42,7 +41,7 @@ final class ListViewModel: ObservableObject {
         }
     }
     
-    func save() {
-        persistence.save(items: items)
+    func delete(index: IndexSet) {
+        items.remove(atOffsets: index)
     }
 }

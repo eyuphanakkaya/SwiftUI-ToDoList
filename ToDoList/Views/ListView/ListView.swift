@@ -24,6 +24,9 @@ struct ListView: View {
                 .onMove(perform: viewModel.move)
             }
             .navigationTitle("ToDo List 📋")
+            .onAppear(perform: {
+                viewModel.getItems()
+            })
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     NavigationLink("Add") {
