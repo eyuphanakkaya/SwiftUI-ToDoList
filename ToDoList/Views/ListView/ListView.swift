@@ -43,7 +43,6 @@ struct ListView: View {
 
 #Preview {
     NavigationStack {
-        let viewModel = ListViewModel()
-        ListView(viewModel: viewModel)
+        ListViewFactory.make()
     }
 }

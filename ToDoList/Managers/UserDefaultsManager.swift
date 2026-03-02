@@ -22,9 +22,9 @@ final class UserDefaultsManager: Persisting {
         defaults.set(encoded, forKey: key)
     }
     
-    func load() -> ItemModel? {
+    func load() -> [ItemModel]? {
         guard let data = UserDefaults.standard.data(forKey: key),
-              let decoded = try? JSONDecoder().decode(ItemModel.self, from: data) else {
+              let decoded = try? JSONDecoder().decode([ItemModel].self, from: data) else {
             return nil
         }
         
