@@ -9,6 +9,6 @@ import Foundation
 
 protocol Persisting {
     func save(items: [ItemModel])
-    func load() -> ItemModel?
+    func load() -> [ItemModel]?
     func delete()
 }

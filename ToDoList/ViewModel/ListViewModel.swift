@@ -9,24 +9,23 @@ import SwiftUI
 import Combine
 
 final class ListViewModel: ObservableObject {
+    
+    private let persistence: Persisting
+    
     @Published var items: [ItemModel] = [] {
         didSet {
             save()
         }
     }
-    private let itemsKey = "items_list"
     
-    init() {
+    init(persistence: Persisting) {
+        self.persistence = persistence
         getItems()
     }
     
     private func getItems() {
-        guard let data = UserDefaults.standard.data(forKey: itemsKey),
-        let decoded = try? JSONDecoder().decode([ItemModel].self, from: data)else {
-            return
-        }
-        
-        items = decoded
+        guard let loadItems = persistence.load() else {return}
+        items = loadItems
     }
     
     func delete(index: IndexSet) {
@@ -44,8 +43,6 @@ final class ListViewModel: ObservableObject {
     }
     
     func save() {
-        let encoder = JSONEncoder()
-        let encoded = try? encoder.encode(items)
-        UserDefaults.standard.set(encoded, forKey: itemsKey)
+        persistence.save(items: items)
     }
 }
