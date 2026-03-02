@@ -8,9 +8,7 @@
 import Foundation
 
 
-final class UserDefaultsManager<T: Codable>: Persisting {
-    typealias Item = T
-    
+final class UserDefaultsManager: Persisting {
     private let defaults: UserDefaults
     private let key: String = "userDefaultsKey"
     
@@ -18,15 +16,15 @@ final class UserDefaultsManager<T: Codable>: Persisting {
         self.defaults = defaults
     }
     
-    func save(items: T) {
+    func save(items: [ItemModel]) {
         let encoder = JSONEncoder()
         let encoded = try? encoder.encode(items)
         defaults.set(encoded, forKey: key)
     }
     
-    func load() -> T? {
+    func load() -> ItemModel? {
         guard let data = UserDefaults.standard.data(forKey: key),
-              let decoded = try? JSONDecoder().decode(T.self, from: data) else {
+              let decoded = try? JSONDecoder().decode(ItemModel.self, from: data) else {
             return nil
         }
         

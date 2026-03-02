@@ -8,9 +8,7 @@
 import Foundation
 
 protocol Persisting {
-    associatedtype Item: Codable
-    
-    func save(items: Item)
-    func load() -> Item?
+    func save(items: [ItemModel])
+    func load() -> ItemModel?
     func delete()
 }
