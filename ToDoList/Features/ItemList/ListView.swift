@@ -36,6 +36,12 @@ struct ListView: View {
             viewModel.getItems()
         })
         .toolbar {
+            toolBarItems
+        }
+    }
+    
+    private var toolBarItems: some ToolbarContent {
+        Group {
             ToolbarItem(placement: .topBarTrailing) {
                 NavigationLink("Add") {
                     AddViewFactory.make()
