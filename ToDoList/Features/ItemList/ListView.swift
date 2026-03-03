@@ -11,35 +11,42 @@ struct ListView: View {
     @ObservedObject var viewModel: ListViewModel
     
     var body: some View {
-            List {
-                ForEach(viewModel.items) { item in
-                    ListRowView(item: item)
-                        .onTapGesture {
-                            withAnimation {
-                                viewModel.updateIsCompleted(item: item)
+        
+        ZStack {
+            if viewModel.items.isEmpty {
+                NoItemsView()
+                    .transition(AnyTransition.opacity.animation(.easeIn))
+            } else {
+                List {
+                    ForEach(viewModel.items) { item in
+                        ListRowView(item: item)
+                            .onTapGesture {
+                                withAnimation {
+                                    viewModel.updateIsCompleted(item: item)
+                                }
                             }
-                        }
-                }
-                .onDelete(perform: viewModel.delete)
-                .onMove(perform: viewModel.move)
-            }
-            .navigationTitle("ToDo List 📋")
-            .onAppear(perform: {
-                viewModel.getItems()
-            })
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    NavigationLink("Add") {
-                        AddViewFactory.make()
                     }
-                }
-                
-                ToolbarItem(placement: .topBarLeading) {
-                    EditButton()
+                    .onDelete(perform: viewModel.delete)
+                    .onMove(perform: viewModel.move)
                 }
             }
+        }
+        .navigationTitle("ToDo List 📋")
+        .onAppear(perform: {
+            viewModel.getItems()
+        })
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                NavigationLink("Add") {
+                    AddViewFactory.make()
+                }
+            }
+            
+            ToolbarItem(placement: .topBarLeading) {
+                EditButton()
+            }
+        }
     }
-
 }
 
 
