@@ -22,23 +22,25 @@ struct ListView: View {
         }
     }
     
-    @ViewBuilder
+    
     private var content: some View {
-        if viewModel.items.isEmpty {
-            NoItemsView()
-                .transition(AnyTransition.opacity.animation(.easeIn))
-        } else {
-            List {
-                ForEach(viewModel.items) { item in
-                    ListRowView(item: item)
-                        .onTapGesture {
-                            withAnimation {
-                                viewModel.updateIsCompleted(item: item)
+        ZStack {
+            if viewModel.items.isEmpty {
+                NoItemsView()
+                    .transition(AnyTransition.opacity.animation(.easeIn))
+            } else {
+                List {
+                    ForEach(viewModel.items) { item in
+                        ListRowView(item: item)
+                            .onTapGesture {
+                                withAnimation {
+                                    viewModel.updateIsCompleted(item: item)
+                                }
                             }
-                        }
+                    }
+                    .onDelete(perform: viewModel.delete)
+                    .onMove(perform: viewModel.move)
                 }
-                .onDelete(perform: viewModel.delete)
-                .onMove(perform: viewModel.move)
             }
         }
     }
