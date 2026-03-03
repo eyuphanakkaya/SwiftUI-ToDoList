@@ -12,31 +12,34 @@ struct ListView: View {
     
     var body: some View {
         
-        ZStack {
-            if viewModel.items.isEmpty {
-                NoItemsView()
-                    .transition(AnyTransition.opacity.animation(.easeIn))
-            } else {
-                List {
-                    ForEach(viewModel.items) { item in
-                        ListRowView(item: item)
-                            .onTapGesture {
-                                withAnimation {
-                                    viewModel.updateIsCompleted(item: item)
-                                }
-                            }
-                    }
-                    .onDelete(perform: viewModel.delete)
-                    .onMove(perform: viewModel.move)
-                }
-            }
-        }
+        content
         .navigationTitle("ToDo List 📋")
         .onAppear(perform: {
             viewModel.getItems()
         })
         .toolbar {
             toolBarItems
+        }
+    }
+    
+    @ViewBuilder
+    private var content: some View {
+        if viewModel.items.isEmpty {
+            NoItemsView()
+                .transition(AnyTransition.opacity.animation(.easeIn))
+        } else {
+            List {
+                ForEach(viewModel.items) { item in
+                    ListRowView(item: item)
+                        .onTapGesture {
+                            withAnimation {
+                                viewModel.updateIsCompleted(item: item)
+                            }
+                        }
+                }
+                .onDelete(perform: viewModel.delete)
+                .onMove(perform: viewModel.move)
+            }
         }
     }
     
